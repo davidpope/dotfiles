@@ -1,0 +1,5 @@
+set editing-mode vi
+set bell-style visible
+set completion-ignore-case on
+
+TAB: menu-complete
