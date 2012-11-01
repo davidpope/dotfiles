@@ -1,6 +1,6 @@
 ### human-readable ls output
 
-alias ll='ls -alFh'
+alias ll='ls -lFh'
 alias la='ls -AFh'
 alias l='ls -CFh'
 
