@@ -127,3 +127,6 @@ xterm*|rxvt*)
 *)
     ;;
 esac
+
+export EDITOR=vim
+export VISUAL=vim
