@@ -142,4 +142,4 @@ esac
 export EDITOR=vim
 export VISUAL=vim
 export PAGER=less
-export LESS="-F -i -j.5 -M -R -w"
+export LESS="-X -F -i -j.5 -M -R -w"
