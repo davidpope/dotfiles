@@ -106,7 +106,7 @@ if [ -f /etc/bash_completion -a -f /etc/bash_completion.d/git ]; then
 fi
 
 if [[ -z `declare -f __git_ps1` ]]; then
-  export PS1="$IBlack$Time12h$Color_Off$Space$Hostname $Yellow$PathShort$Color_Off\\$ "
+  export PS1="$IBlack$Time12h$Color_Off$Space$Hostname $Yellow$PathShort$Color_Off$NewLine\\$ "
 else
   export PS1=$IBlack$Time12h$Color_Off$Space$Hostname'$(git branch &>/dev/null;\
   if [ $? -eq 0 ]; then \
@@ -117,10 +117,10 @@ else
     else \
       # @5 - Changes to working tree
       echo "'$IRed'"$(__git_ps1 " {%s}"); \
-    fi) '$BYellow$PathShort$Color_Off'\$ "; \
+    fi) '$BYellow$PathShort$Color_Off$NewLine'\$ "; \
   else \
     # @2 - Prompt when not in GIT repo
-    echo " '$Yellow$PathShort$Color_Off'\$ "; \
+    echo " '$Yellow$PathShort$Color_Off$NewLine'\$ "; \
   fi)'
 fi
 
