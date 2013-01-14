@@ -106,9 +106,9 @@ if [ -f /etc/bash_completion -a -f /etc/bash_completion.d/git ]; then
 fi
 
 if [[ -z `declare -f __git_ps1` ]]; then
-  export PS1="$IBlack$Time12h$Color_Off$Space$Hostname $Yellow$PathShort$Color_Off$NewLine\\$ "
+  PS1="$IBlack$Time12h$Color_Off$Space$Hostname $Yellow$PathShort$Color_Off"
 else
-  export PS1=$IBlack$Time12h$Color_Off$Space$Hostname'$(git branch &>/dev/null;\
+  PS1=$IBlack$Time12h$Color_Off$Space$Hostname'$(git branch &>/dev/null;\
   if [ $? -eq 0 ]; then \
     echo "$(echo `git status` | grep "nothing to commit" > /dev/null 2>&1; \
     if [ "$?" -eq "0" ]; then \
@@ -117,12 +117,20 @@ else
     else \
       # @5 - Changes to working tree
       echo "'$IRed'"$(__git_ps1 " {%s}"); \
-    fi) '$BYellow$PathShort$Color_Off$NewLine'\$ "; \
+    fi) '$BYellow$PathShort$Color_Off'"; \
   else \
     # @2 - Prompt when not in GIT repo
-    echo " '$Yellow$PathShort$Color_Off$NewLine'\$ "; \
+    echo " '$Yellow$PathShort$Color_Off'"; \
   fi)'
 fi
+export PS1=$PS1$NewLine'$(
+  if [ $EUID -eq 0 ]; then
+    echo "'$IRed'\$'$Color_Off' "
+  else
+    echo "\\$ "
+  fi
+)'
+
 
 ### Reapply the title-setting logic from .bashrc that we just stomped
 
