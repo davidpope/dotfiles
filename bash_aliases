@@ -151,3 +151,7 @@ export EDITOR=vim
 export VISUAL=vim
 export PAGER=less
 export LESS="-X -F -i -j.1 -M -R -w"
+
+if [ -f $HOME/.bash_aliases.local ]; then
+    . $HOME/.bash_aliases.local
+fi
