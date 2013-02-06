@@ -1,0 +1,12 @@
+[color]
+    ui = auto
+    interactive = auto
+[core]
+    excludesfile = ~/.gitignore
+    editor = vim
+[ui]
+    color = auto
+[diff]
+    tool = "kdiff3"
+[merge]
+    tool = "kdiff3"
