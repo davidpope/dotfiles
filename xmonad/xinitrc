@@ -4,8 +4,13 @@ trayer --edge top --align right --SetDockType true --SetPartialStrut true --expa
 
 # VMWare Tools
 VMWARE_SETUID_TOOLS=/usr/lib/vmware-tools/bin/vmware-user-suid-wrapper
-if [ -u $VMWARE_SETUID_TOOLS ]; then
-    $VMWARE_SETUID_TOOLS
-fi
+[ -u $VMWARE_SETUID_TOOLS ] && $VMWARE_SETUID_TOOLS
+
+# HipChat
+HIPCHAT=/opt/HipChat/bin/HipChat
+[ -x $HIPCHAT ] && $HIPCHAT &
+
+# nice dark purple
+xsetroot -solid rgb:30/00/38
 
 exec xmonad
