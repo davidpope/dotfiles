@@ -2,14 +2,14 @@ import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Util.EZConfig
 import System.IO
 import qualified XMonad.StackSet as W
 
 import XMonad.Layout.Reflect
 
 main = do
-    xmproc <- spawnPipe "/usr/bin/xmobar /home/davep/.xmobarrc"
+    xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmobarrc"
     xmonad $ defaultConfig
         { manageHook = manageDocks <+> manageHook defaultConfig
         -- , layoutHook = avoidStruts $ layoutHook defaultConfig
@@ -20,7 +20,11 @@ main = do
                     }
         , modMask = mod4Mask    -- Rebind Mod to the Windows key
         , borderWidth = 5
-        } `additionalKeys` myKeys
+        }
+        `additionalKeys` myKeys
+        `additionalKeysP`
+        [ ("M-i", spawn "google-chrome" )
+        ]
 
 myKeys =
     [
