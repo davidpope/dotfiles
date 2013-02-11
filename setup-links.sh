@@ -15,9 +15,10 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # window manager setup
 if [ "x$1" == "xawesome" ]; then
-    mkdir -p $HOME/.config/awesome
-    [ -a $HOME/.config/awesome/rc.lua ] || ln -s $SCRIPT_DIR/awesomewm/rc.lua $HOME/.config/awesome/rc.lua
-    [ -a $HOME/.xinitrc ] || ln -s $SCRIPT_DIR/awesomewm/xinitrc $HOME/.xinitrc
+    [ -d $HOME/.config ] || mkdir -p $HOME/.config
+    [ -a $HOME/.config/awesome ] || ln -s $SCRIPT_DIR/awesome $HOME/.config/awesome
+
+    [ -a $HOME/.xinitrc ] || ln -s $SCRIPT_DIR/awesome/xinitrc $HOME/.xinitrc
 
     # for *dm-managed login
     [ -a $HOME/.xsession ] || ln -s $HOME/.xinitrc $HOME/.xsession
