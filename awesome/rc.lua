@@ -205,115 +205,117 @@ root.buttons(awful.util.table.join(
 -- }}}
 
 -- {{{ Key bindings
-globalkeys = awful.util.table.join(
-    awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
-    awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
-    awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
 
-    awful.key({ modkey,           }, "j",
-        function ()
-            awful.client.focus.byidx( 1)
-            if client.focus then client.focus:raise() end
-        end),
-    awful.key({ modkey,           }, "k",
-        function ()
-            awful.client.focus.byidx(-1)
-            if client.focus then client.focus:raise() end
-        end),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show({keygrabber = true}) end),
+keyhelp = {}
+keyhelp.config = {
+    viewer = browser or "x-www-browser",
+    chromeless_prefix = ""  -- set to "--app=" if you use Chrome
+}
 
-    -- Layout manipulation
-    awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
-    awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end),
-    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
-    awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
-    awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
-    awful.key({ modkey,           }, "Tab",
-        function ()
-            awful.client.focus.history.previous()
-            if client.focus then
-                client.focus:raise()
-            end
-        end),
-
-    -- Standard program
-    awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
-    awful.key({ modkey            }, "i",      function() awful.util.spawn(browser) end),
-    awful.key({ modkey, "Control" }, "r", awesome.restart),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit),
-
-    awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
-    awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
-    awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
-    awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
-    awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1)         end),
-    awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
-    awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
-    awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
-
-    awful.key({ modkey, "Control" }, "n", awful.client.restore),
-
-    -- Prompt
-    --awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
-    awful.key({ modkey },            "r",     function () obvious.popup_run_prompt.run_prompt() end),
-
-    awful.key({ modkey }, "x",
-              function ()
-                  awful.prompt.run({ prompt = "Run Lua code: " },
-                  mypromptbox[mouse.screen].widget,
-                  awful.util.eval, nil,
-                  awful.util.getdir("cache") .. "/history_eval")
-              end),
-    awful.key({ modkey, "Shift"   }, "/",     function() naughty.notify({
-                                                   preset = naughty.config.presets.normal,
-                                                   title = "AwesomeWM Keyboard Shortcuts",
-                                                   text = gen_key_markup() })
-                                              end)
-)
-
-
-function inTable(t, v)
-    for _, value in ipairs(t) do
-        if v == value then return true end
-    end
-    return false
-end
-
-
-function open_temp_file(template)
+-- Hand-rolled tempfile so we can reference the filename;
+-- this also lets us put it in the .cache directory
+function keyhelp_open_temp_file(template)
     local handle
     local fname
     assert(string.match(template, "@@@"), 
-        "ERROR open_temp_file: template must contain \"%%%\".")
+        "ERROR open_temp_file: template must contain \"@@@\".")
     while true do
         nocollide = tostring(math.random(10000000,99999999))
         fname = string.gsub(template, "@@@", nocollide)
         handle = io.open(fname, "r")
+        -- minor race condition, shrug
         if not handle then
             handle = assert(io.open(fname, "w"))
             break
         end
         io.close(handle)
-        io.write(".")   -- Shows collision, comment out except for diagnostics
     end
     return handle, fname
 end
 
+-- ... but Lua doesn't clean up our hand-rolled temp files for us
+awesome.add_signal("exit", function ()
+    to_delete = awful.util.getdir("cache") .. "/helpkeys*.html"
+    os.execute("/usr/bin/env $SHELL -c \"rm " .. to_delete .. "\"")
+end)
 
-function launch_keyhelp()
+
+-- TODO: move this
+keyhelp.config.chromeless_prefix = "--app="
+
+keyhelp.launch = function ()
     local f, filename
     local fname_templ = awful.util.getdir("cache") .. "/helpkeys@@@.html"
-    f, filename = open_temp_file(fname_templ)
+    f, filename = keyhelp_open_temp_file(fname_templ)
     print("f, fn: " .. tostring(f) .. ", " .. filename)
-    gen_key_markup(f)
+    keyhelp.gen_key_markup(f, keyhelp.keys_src)
     f:flush()
     f:close()
-    awful.util.spawn("google-chrome --app=\"file://" .. filename .. "\"")
+    local chrome_switch = ""
+    local launch_str = keyhelp.config.viewer .. " " ..
+                       keyhelp.config.chromeless_prefix ..
+                       "\"file://" .. filename .. "\""
+    awful.util.spawn(launch_str)
 end
 
+keyhelp.util = {
+    filter = function (t, pred)
+        local ret = {}
+        local j = 1
+        for _, v in ipairs(t) do
+            if pred(v) then
+                ret[j] = v
+                j = j + 1
+            end
+        end
+        return ret
+    end,
+    in_table = function(t, v)
+        for _, value in ipairs(t) do
+            if v == value then return true end
+        end
+        return false
+    end,
+}
+
+keyhelp.init = function(keys_src)
+
+    keyhelp.keys_src = keys_src
+
+    local allkeys_src = {}
+    for i, group in ipairs(keys_src) do
+        allkeys_src = awful.util.table.join(allkeys_src, group.bindings)
+    end
+
+    local ck_src = keyhelp.util.filter(
+                       allkeys_src,
+                       function(k) return k["binding_type"] == "client" end)
+
+    local clientkeys = {}
+    for _, v in ipairs(ck_src) do
+        clientkeys = awful.util.table.join(clientkeys,
+                                           awful.key(v["modifiers"],
+                                                     v["key"],
+                                                     v["func"]))
+    end
+
+    local gk_src = keyhelp.util.filter(
+                       allkeys_src,
+                       function(k) return k["binding_type"] == "global" end)
+
+    local globalkeys = {}
+    for _, v in ipairs(gk_src) do
+        globalkeys = awful.util.table.join(globalkeys,
+                                           awful.key(v["modifiers"],
+                                                     v["key"],
+                                                     v["func"]))
+    end
+
+    return clientkeys, globalkeys
+end
 
 -- TODO: Lua probably has a template library I could use
-function gen_key_markup(fh)
+keyhelp.gen_key_markup = function (fh, keys_src)
     css_file = "file://" .. awful.util.getdir("config") .. "/keyhelp/styles.css"
     fh:write("<html><head><title>Awesome Key Bindings</title><link rel=\"stylesheet\" type=\"text/css\" href=\"" .. css_file .."\">\n</head>\n")
     fh:write("<body>\n")
@@ -339,9 +341,9 @@ function gen_key_markup(fh)
             if v.binding_type == "special" then
                 fh:write(v.display_text)
             else
-                if inTable(v.modifiers, modkey) then fh:write("Super + ") end
-                if inTable(v.modifiers, "Control") then fh:write("Control + ") end
-                if inTable(v.modifiers, "Shift") then fh:write("Shift + ") end
+                if keyhelp.util.in_table(v.modifiers, modkey) then fh:write("Super + ") end
+                if keyhelp.util.in_table(v.modifiers, "Control") then fh:write("Control + ") end
+                if keyhelp.util.in_table(v.modifiers, "Shift") then fh:write("Shift + ") end
                 fh:write(string.upper(v.key))
             end
             fh:write("</div></div>\n</h3>\n")
@@ -707,82 +709,32 @@ custom_keys_group.bindings = {
         modifiers = { modkey, "Shift" },
         key = "/",
         func = function()
-            launch_keyhelp()
+            keyhelp.launch()
+        end,
+        binding_type = "global",
+    },
+    {
+        description = "Launch browser",
+        modifiers = { modkey },
+        key = "i",
+        func = function()
+            awful.util.spawn(browser)
         end,
         binding_type = "global",
     },
 }
 
-keys_src = {}
-keys_src[1] = wm_keys_group
-keys_src[2] = clients_keys_group
-keys_src[3] = nav_keys_group
-keys_src[4] = layout_keys_group
-keys_src[5] = custom_keys_group
-
-allkeys_src = {}
-for i, group in ipairs(keys_src) do
-    print(i .. ": iterating over section " .. group.description)
-    allkeys_src = awful.util.table.join(allkeys_src, group.bindings)
-end
-
-function filter(t, pred)
-    local ret = {}
-    local j = 1
-    for _, v in ipairs(t) do
-        if pred(v) then
-            ret[j] = v
-            j = j + 1
-        end
-    end
-    return ret
-end
-
---client_keys_src = filter(keys_src["Clients"], function(k)
-client_keys_src = filter(allkeys_src, function(k)
-                                          return k["binding_type"] == "client"
-                                      end)
-
-clientkeys = {}
-print("ck")
-for _, v in ipairs(client_keys_src) do
-    print("--ck")
-    clientkeys = awful.util.table.join(clientkeys, awful.key(v["modifiers"], v["key"], v["func"]))
-end
-
-global_keys_src = filter(allkeys_src, function(k)
-                                          return k["binding_type"] == "global"
-                                      end)
-
-globalkeys = {}
-print("gk")
-for _, v in ipairs(global_keys_src) do
-    print("--gk")
-    globalkeys = awful.util.table.join(globalkeys, awful.key(v["modifiers"], v["key"], v["func"]))
-end
 
 
+my_keys = {}
+my_keys[1] = wm_keys_group
+my_keys[2] = clients_keys_group
+my_keys[3] = nav_keys_group
+my_keys[4] = layout_keys_group
+my_keys[5] = custom_keys_group
 
---clientkeys = awful.util.table.join(
-    --awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
-    --awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
-    --awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
-    --awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
-    --awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
-    --awful.key({ modkey, "Shift"   }, "r",      function (c) c:redraw()                       end),
-    --awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end),
-    --awful.key({ modkey,           }, "n",
-        --function (c)
-            -- The client currently has the input focus, so it cannot be
-            -- minimized, since minimized clients can't have the focus.
-            --c.minimized = true
-        --end),
-    --awful.key({ modkey,           }, "m",
-        --function (c)
-            --c.maximized_horizontal = not c.maximized_horizontal
-            --c.maximized_vertical   = not c.maximized_vertical
-        --end)
---)
+clientkeys, globalkeys = keyhelp.init(my_keys)
+
 
 -- Compute the maximum number of digit we need, limited to 9
 keynumber = 0
