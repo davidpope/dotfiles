@@ -13,6 +13,11 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 [ -a $HOME/.gitconfig ] || cp $SCRIPT_DIR/gitconfig $HOME/.gitconfig
 [ -a $HOME/.toprc ] || cp $SCRIPT_DIR/toprc $HOME/.toprc
 
+# vim setup
+[ -a $HOME/.vimrc ] || ln -s $SCRIPT_DIR/vim/vimrc $HOME/.vimrc
+[ -a $HOME/.gvimrc ] || ln -s $SCRIPT_DIR/vim/gvimrc $HOME/.gvimrc
+[ -a $HOME/.vim ] || ln -s $SCRIPT_DIR/vim/vimfiles $HOME/.vim
+
 # window manager setup
 if [ "x$1" == "xawesome" ]; then
     [ -d $HOME/.config ] || mkdir -p $HOME/.config

@@ -1,0 +1,190 @@
+set nocompatible
+
+call pathogen#infect()
+call pathogen#helptags()
+
+if has("syntax")
+  syntax on
+endif
+
+" Have Vim load indentation rules and plugins according to the detected filetype.
+if has("autocmd")
+  filetype plugin indent on
+endif
+
+" Have Vim jump to the last position when reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+if &t_Co == "256"
+  set background=dark
+  let g:solarized_termcolors=256
+  colorscheme solarized
+else
+  colorscheme nightsky_dave
+endif
+
+" use UTF-8 encoding by default; see http://vim.wikia.com/wiki/Working_with_Unicode
+if has("multi_byte")
+  if &termencoding == ""
+    let &termencoding = &encoding
+  endif
+  set encoding=utf-8
+  setglobal fileencoding=utf-8
+  "setglobal bomb
+  set fileencodings=ucs-bom,utf-8,latin1
+endif
+
+" in-vim file browsing
+map <Leader>e :Explore<cr>
+map <Leader>s :Sexplore<cr>
+
+" Tab management
+nnoremap <silent> <leader><TAB> :tabnext<cr>
+nnoremap <silent> <leader><S-TAB> :tabprevious<cr>
+nnoremap <leader>t :tabnew<cr>
+" always show tab line
+" set showtabline=2
+
+" Don't create backup files
+set nobackup
+
+" Don't use a swapfile
+set noswapfile
+
+" On windows, don't destroy symbolic links
+" set nowritebackup
+ 
+" tabs and indents: spaces everywhere
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set smarttab
+set expandtab
+set autoindent
+set smartindent
+
+" override tab settings on a per-directory basis
+" Answer to StackOverflow question http://stackoverflow.com/questions/9789439/
+function! SetStandardTabs()
+  set noexpandtab
+  set tabstop=8
+  set softtabstop=4
+endfunction
+
+augroup PerDirectoryTabs
+  autocmd!
+  autocmd BufRead,BufEnter,BufNewFile D:/dev/projects/net/vim.hg/* call SetStandardTabs()
+augroup END
+
+" per-subtree .vimrc
+" Answer to StackOverflow question http://stackoverflow.com/questions/9789439/
+function! FindAndSourceLocalVimrc()
+  if exists('g:inFindLocalVimrc')
+    return
+  endif
+  let g:inFindLocalVimrc=1
+
+  let v = findfile('.vimrc', '.;')
+  if exists('v')
+    let v = fnamemodify(v, ':p')
+    if v != $MYVIMRC
+      exe "source " . v
+    endif
+  endif
+
+  unlet g:inFindLocalVimrc
+endfunction
+
+" call FindAndSourceLocalVimrc()
+
+" allow backspace over autoindent
+set backspace=indent
+
+" Don't force a newline in the last line of the file
+set noeol
+
+" Show tab characters
+set list
+set listchars=tab:>.
+
+" match parentheses
+set showmatch
+hi MatchParen ctermbg=blue guibg=lightblue
+
+" command and file completion
+set wildmenu
+set wildmode=list:longest
+" set wildignorecase
+set wildignore+=*.o,*.obj,*.exe,*.bak,_viminfo
+
+" finding files and directories: search subtree of current dir by default
+set path=**
+
+" some nice display tweaks
+set showcmd     " show current partial command on the status line
+set visualbell  " flash instead of beep
+set ttyfast     " don't overoptimize screen writes
+set ruler       " show cursor position and file position %
+
+" Highlight the current line, but only in the current window
+set cursorline  " required to turn it on when entering Vim
+augroup BgHighlight
+    autocmd!
+    autocmd WinEnter * set cursorline
+    autocmd WinLeave * set nocursorline
+augroup END
+
+" Display offset of lines on the left, useful for motions
+set relativenumber
+set numberwidth=3
+
+""" Search
+" enable incremental search
+set incsearch
+" set the "very magic" option in common searches
+nnoremap / /\v
+vnoremap / /\v
+cnoremap s/ s/\v
+" be smart about casing
+set ignorecase
+set smartcase
+" highlight results...
+set hlsearch
+" ... and have a way to turn highlights off quickly
+nnoremap <leader><space> :noh<cr>
+
+" help indices!
+nnoremap <silent> <F1> :help index<CR>
+inoremap <silent> <F1> <C-O>:help insert-index<CR>
+
+" set up a detailed status line and window title
+" mooched from http://www.terminally-incoherent.com/blog/2012/03/26/how-to-configure-vim/
+set ls=2    " status line always enabled
+if has('statusline')
+    " Status line detail:
+    " %f     file path
+    " %w     shows '[Preview]' if this is the preview window
+    " %q     shows '[Quickfix List]', '[Location List]' or nothing.
+    " %y     file type between braces (if defined)
+    " %([%R%M]%)   read-only, modified and modifiable flags between braces
+    " %=     right-align following items
+    " %n     buffer number
+    " %l,%c,%V,%p   line, column, virtual column, and file percent
+    function! SetStatusLineStyle()
+        let &stl="%f %w%q%y %([%R%M]%)%=buf:%n ln:%l col:%c%V (%p%%) "
+    endfunc
+    call SetStatusLineStyle()
+    if has('title')
+        set titlestring=%t%(\ [%R%M]%)
+    endif
+endif
+
+if has('win32')
+    set tags+=D:\dev\projects\tags\crt_tags
+endif
+
+" Python setup
+let g:pymode_lint_checker = "pylint,pep8,mccabe"
+let g:pymode_lint_ignore = "I,E501,R0914,R0912,W0511,F0401,W0703,W0704,W0105"

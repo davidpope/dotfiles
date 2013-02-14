@@ -1,0 +1,15 @@
+" TODO: pick a decent font on GTK and X, these are the defaults
+" TODO: pick a decent window size on GTK and X, these are the defaults
+if has("gui_running")
+    :set guioptions-=m
+    :set guioptions-=T
+    if has("gui_gtk2")
+        :set guifont=DejaVu\ Sans\ Mono\ 9,Luxi\ Mono\ 12
+    elseif has("x11")
+        " Also for GTK 1
+        :set guifont=*-lucidatypewriter-medium-r-normal-*-*-180-*-*-m-*-*
+    elseif has("gui_win32")
+        :set guifont=Consolas:h9:cANSI
+        :set columns=120 lines=65
+    endif
+endif
