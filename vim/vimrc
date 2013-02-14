@@ -188,3 +188,4 @@ endif
 " Python setup
 let g:pymode_lint_checker = "pylint,pep8,mccabe"
 let g:pymode_lint_ignore = "I,E501,R0914,R0912,W0511,F0401,W0703,W0704,W0105"
+let g:pymode_rope_vim_completion = 1
