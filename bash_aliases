@@ -197,6 +197,9 @@ case "$TERM" in
     ;;
 esac
 
+[ -d $HOME/tmp ] || mkdir $HOME/tmp
+export TMPDIR=$HOME/tmp
+
 if [ -f $HOME/.bash_aliases.local ]; then
     . $HOME/.bash_aliases.local
 fi
