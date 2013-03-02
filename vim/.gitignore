@@ -1,2 +1,4 @@
 vimfiles/.netrwhist
 vimfiles/bundle/python-mode
+vimfiles/bundle/vim-powerline
+vimfiles/bundle/ctrlp.vim
