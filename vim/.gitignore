@@ -1,4 +1,10 @@
 vimfiles/.netrwhist
+
+# https://github.com/klen/python-mode
 vimfiles/bundle/python-mode
+
+# https://github.com/Lokaltog/vim-powerline
 vimfiles/bundle/vim-powerline
+
+# https://github.com/kien/ctrlp.vim
 vimfiles/bundle/ctrlp.vim
