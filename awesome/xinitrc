@@ -1,11 +1,11 @@
-[ -a $HOME/.Xresources ] && xrdb -merge .Xresources
+[ -a $HOME/.Xresources ] && xrdb -merge $HOME/.Xresources
 
 # VMWare Tools
 VMWARE_SETUID_TOOLS=/usr/lib/vmware-tools/bin/vmware-user-suid-wrapper
 [ -u $VMWARE_SETUID_TOOLS ] && $VMWARE_SETUID_TOOLS
 
 # HipChat
-HIPCHAT=/opt/HipChat/bin/HipChat
+HIPCHAT=/opt/HipChat/bin/hipchat
 [ -x $HIPCHAT ] && $HIPCHAT &
 
 # Keyring
