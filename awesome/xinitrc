@@ -23,7 +23,7 @@ export GNOME_KEYRING_SOCKET
 
 # Screen settings
 xsetroot -solid rgb:30/00/38
-xscreensaver &
+xscreensaver -no-splash &
 
 # need to rejigger network sometimes
 nm-applet &
