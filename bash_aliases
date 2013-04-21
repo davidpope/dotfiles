@@ -4,6 +4,10 @@ alias ll='ls -lFh'
 alias la='ls -AFh'
 alias l='ls -CFh'
 
+if [ "$COLORTERM" == "gnome-terminal" ]; then
+    export TERM=xterm-256color
+fi
+
 ### git prompt mooched from http://mediadoneright.com/content/ultimate-git-ps1-bash-prompt
 
 #  Customize BASH PS1 prompt to show current GIT repository and branch.

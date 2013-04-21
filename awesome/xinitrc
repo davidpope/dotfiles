@@ -1,12 +1,17 @@
-[ -a $HOME/.Xresources ] && xrdb -merge .Xresources
+[ -a $HOME/.Xresources ] && xrdb -merge $HOME/.Xresources
 
 # VMWare Tools
 VMWARE_SETUID_TOOLS=/usr/lib/vmware-tools/bin/vmware-user-suid-wrapper
 [ -u $VMWARE_SETUID_TOOLS ] && $VMWARE_SETUID_TOOLS
 
 # HipChat
-HIPCHAT=/opt/HipChat/bin/hipchat
-[ -x $HIPCHAT ] && $HIPCHAT &
+HIPCHAT=/opt/HipChat/bin/hipchat        # Native!  New and shiny!
+HIPCHAT_OLD=/opt/HipChat/bin/HipChat    # Adobe AIR.  Old and busted.
+if [ -x $HIPCHAT ]; then
+    $HIPCHAT &
+elif [ -x $HIPCHAT_OLD ]; then
+    $HIPCHAT_OLD &
+fi
 
 # Keyring
 eval $(gnome-keyring-daemon --start)
@@ -18,7 +23,7 @@ export GNOME_KEYRING_SOCKET
 
 # Screen settings
 xsetroot -solid rgb:30/00/38
-xscreensaver &
+xscreensaver -no-splash &
 
 # need to rejigger network sometimes
 nm-applet &
