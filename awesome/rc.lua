@@ -12,6 +12,9 @@ require("debian.menu")
 
 require("obvious.popup_run_prompt")
 
+require("vain")
+vain.widgets.terminal = "gnome-terminal"
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -45,7 +48,8 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
-beautiful.init( awful.util.getdir("config") .. "/themes/solarized-dark/theme.lua" )
+--beautiful.init( awful.util.getdir("config") .. "/themes/solarized-dark/theme.lua" )
+beautiful.init( awful.util.getdir("config") .. "/themes/custom/theme.lua" )
 
 -- This is used later as the default terminal and editor to run.
 terminal = "x-terminal-emulator"
@@ -63,6 +67,7 @@ modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
 {
+    vain.layout.termfair,
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
     -- awful.layout.suit.tile.bottom,
@@ -80,10 +85,22 @@ layouts =
 
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
-tags = {}
+-- tags = {}
+tags = {
+    names =   {  "1-Code",   "2-Code",   "3-Shells", "4-Browse", "5-Other",  "6-IM" },
+    layouts = {  layouts[1], layouts[1], layouts[1], layouts[1], layouts[2], layouts[2] },
+    nmasters = { 3,          3,          3,          2,          1,          1},
+    nminrows = { 1,          1,          2,          1,          1,          1},
+}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
+    -- tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
+    local scr_tags = awful.tag(tags.names, s, tags.layouts)
+    for t = 1, #scr_tags do
+        awful.tag.setnmaster(tags.nmasters[t], scr_tags[t])
+        awful.tag.setncol(tags.nminrows[t], scr_tags[t])
+    end
+    tags[s] = scr_tags
 end
 -- }}}
 
@@ -797,11 +814,15 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "pinentry" },
       properties = { floating = true } },
-    { rule = { class = "gimp" },
-      properties = { floating = true } },
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
+    { rule = { class = "X-www-browser" },
+      properties = { floating = false } },
+    { rule = { class = "Hipchat" },
+      callback = function(c)
+                     awful.client.movetotag(tags[mouse.screen][6], c)
+                 end }
 }
 -- }}}
 
