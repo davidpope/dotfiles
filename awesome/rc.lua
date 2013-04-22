@@ -93,11 +93,17 @@ tags = {
     nminrows = { 1,          1,          2,          1,          1,          1},
 }
 for s = 1, screen.count() do
+    local screen_width = screen[s].workarea.width
     -- Each screen has its own tag table.
     -- tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
     local scr_tags = awful.tag(tags.names, s, tags.layouts)
     for t = 1, #scr_tags do
-        awful.tag.setnmaster(tags.nmasters[t], scr_tags[t])
+        -- this is clumsy but no time for learning LUA right now
+        local nmasters = tags.nmasters[t]
+        if nmasters > 1 and screen_width < 2000 then
+            nmasters = nmasters - 1
+        end
+        awful.tag.setnmaster(nmasters, scr_tags[t])
         awful.tag.setncol(tags.nminrows[t], scr_tags[t])
     end
     tags[s] = scr_tags
