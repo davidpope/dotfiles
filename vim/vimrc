@@ -159,28 +159,9 @@ nnoremap <leader><space> :noh<cr>
 nnoremap <silent> <F1> :help index<CR>
 inoremap <silent> <F1> <C-O>:help insert-index<CR>
 
-" set up a detailed status line and window title
-" mooched from http://www.terminally-incoherent.com/blog/2012/03/26/how-to-configure-vim/
 set ls=2    " status line always enabled
-if has('statusline')
-    " Status line detail:
-    " %f     file path
-    " %w     shows '[Preview]' if this is the preview window
-    " %q     shows '[Quickfix List]', '[Location List]' or nothing.
-    " %y     file type between braces (if defined)
-    " %([%R%M]%)   read-only, modified and modifiable flags between braces
-    " %=     right-align following items
-    " %n     buffer number
-    " %l,%c,%V,%p   line, column, virtual column, and file percent
-    function! SetStatusLineStyle()
-        let &stl="%f %w%q%y %([%R%M]%)%=buf:%n ln:%l col:%c%V (%p%%) "
-    endfunc
-    call SetStatusLineStyle()
-    if has('title')
-        set titlestring=%t%(\ [%R%M]%)
-    endif
-endif
 
+" Windows box customization
 if has('win32')
     set tags+=D:\dev\projects\tags\crt_tags
 endif
