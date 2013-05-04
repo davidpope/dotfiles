@@ -87,10 +87,10 @@ layouts =
 -- Define a tag table which hold all screen tags.
 -- tags = {}
 tags = {
-    names =   {  "1-Code",   "2-Code",   "3-Shells", "4-Browse", "5-Other",  "6-IM" },
-    layouts = {  layouts[1], layouts[1], layouts[1], layouts[1], layouts[2], layouts[2] },
-    nmasters = { 3,          3,          3,          2,          1,          1},
-    nminrows = { 1,          1,          2,          1,          1,          1},
+    names =   {  "1-Code",   "2-Code",   "3-Shells", "4-Browse", "5-Fullscreen", "6-Fullscreen", "7-Other",  "8-Other",  "9-IM" },
+    layouts = {  layouts[1], layouts[1], layouts[1], layouts[1], layouts[4],     layouts[4],     layouts[2], layouts[2], layouts[2] },
+    nmasters = { 3,          3,          3,          2,          1,              1,              1,          1,          1},
+    nminrows = { 1,          1,          2,          1,          1,              1,              1,          1,          1},
 }
 for s = 1, screen.count() do
     local screen_width = screen[s].workarea.width
@@ -827,7 +827,7 @@ awful.rules.rules = {
       properties = { floating = false } },
     { rule = { class = "Hipchat" },
       callback = function(c)
-                     awful.client.movetotag(tags[mouse.screen][6], c)
+                     awful.client.movetotag(tags[mouse.screen][9], c)
                  end }
 }
 -- }}}
