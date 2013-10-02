@@ -8,6 +8,9 @@ if [ "$COLORTERM" == "gnome-terminal" ]; then
     export TERM=xterm-256color
 fi
 
+# use red color for ag highlight
+[ -x `which ag` ] && alias ag='ag --color-match 1\;31'
+
 ### git prompt mooched from http://mediadoneright.com/content/ultimate-git-ps1-bash-prompt
 
 #  Customize BASH PS1 prompt to show current GIT repository and branch.
