@@ -31,5 +31,8 @@ nm-applet &
 # Dropbox
 # [ -x $HOME/.dropbox-dist/dropboxd ] && $HOME/.dropbox-dist/dropboxd &
 
+# Conky
+[ -x conky ] && conky
+
 [ -d $HOME/.cache/awesome ] || mkdir -p $HOME/.cache/awesome
 exec awesome --config $HOME/.config/awesome/rc.lua >> $HOME/.cache/awesome/stdout 2>> $HOME/.cache/awesome/stderr

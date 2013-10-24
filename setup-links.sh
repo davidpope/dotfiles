@@ -26,6 +26,7 @@ if [ "x$1" == "xawesome" ]; then
     [ -a $HOME/.xinitrc ] || ln -s $SCRIPT_DIR/awesome/xinitrc $HOME/.xinitrc
     [ -a $HOME/.xscreensaver ] || ln -s $SCRIPT_DIR/awesome/xscreensaver $HOME/.xscreensaver
     [ -a $HOME/.Xresources ] || ln -s $SCRIPT_DIR/awesome/Xresources $HOME/.Xresources
+    [ -a $HOME/.conkyrc ] || ln -s $SCRIPT_DIR/awesome/conkyrc $HOME/.conkyrc
 
     # for *dm-managed login
     [ -a $HOME/.xsession ] || ln -s $HOME/.xinitrc $HOME/.xsession

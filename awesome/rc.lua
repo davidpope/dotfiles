@@ -219,6 +219,13 @@ for s = 1, screen.count() do
 end
 -- }}}
 
+-- {{{ Status bar wibox
+-- mooched from http://awesome.naquadah.org/wiki/Conky_bar
+mystatusbar = awful.wibox({ position = "bottom", screen = 1, ontop = false, width = 1, height = 16 })
+-- }}}
+
+
+
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
     awful.button({ }, 3, function () mymainmenu:toggle() end),
