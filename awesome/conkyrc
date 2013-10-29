@@ -26,7 +26,7 @@ double_buffer yes
 
 # DaveP mooched and adapted from http://awesome.naquadah.org/wiki/Conky_bar
 
-alignment bottom_middle
+alignment bottom_left
 background yes
 border_width 1
 cpu_avg_samples 2
