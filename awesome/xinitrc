@@ -34,5 +34,8 @@ nm-applet &
 # Conky
 [ -x conky ] && conky
 
+# User-local paths to support Super-R
+[ -d $HOME/local/bin ] && export PATH=$PATH:$HOME/local/bin
+
 [ -d $HOME/.cache/awesome ] || mkdir -p $HOME/.cache/awesome
 exec awesome --config $HOME/.config/awesome/rc.lua >> $HOME/.cache/awesome/stdout 2>> $HOME/.cache/awesome/stderr
