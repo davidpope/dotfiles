@@ -2,16 +2,11 @@
 
 # VMWare Tools
 VMWARE_SETUID_TOOLS=/usr/lib/vmware-tools/bin/vmware-user-suid-wrapper
-[ -u $VMWARE_SETUID_TOOLS ] && $VMWARE_SETUID_TOOLS
+[ -u "$VMWARE_SETUID_TOOLS" ] && "$VMWARE_SETUID_TOOLS"
 
 # HipChat
-HIPCHAT=/opt/HipChat/bin/hipchat        # Native!  New and shiny!
-HIPCHAT_OLD=/opt/HipChat/bin/HipChat    # Adobe AIR.  Old and busted.
-if [ -x $HIPCHAT ]; then
-    $HIPCHAT &
-elif [ -x $HIPCHAT_OLD ]; then
-    $HIPCHAT_OLD &
-fi
+HIPCHAT=/opt/HipChat/bin/hipchat
+[ -x "$HIPCHAT" ] && "$HIPCHAT" &
 
 # Keyring
 eval $(gnome-keyring-daemon --start)
@@ -32,7 +27,8 @@ nm-applet &
 # [ -x $HOME/.dropbox-dist/dropboxd ] && $HOME/.dropbox-dist/dropboxd &
 
 # Conky
-[ -x conky ] && conky
+CONKY=`which conky`
+[ -x "$CONKY" ] && "$CONKY"  # auto-backgrounds itself
 
 # User-local paths to support Super-R
 [ -d $HOME/local/bin ] && export PATH=$PATH:$HOME/local/bin
