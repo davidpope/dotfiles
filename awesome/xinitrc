@@ -33,5 +33,9 @@ CONKY=`which conky`
 # User-local paths to support Super-R
 [ -d $HOME/local/bin ] && export PATH=$PATH:$HOME/local/bin
 
+# trick Java apps into thinking awesome is a reparenting window manager.
+# Also, for some unfathomable reason HipChat likes to set the window manager name to itself...
+wmname LG3D 2>&1 >> /dev/null
+
 [ -d $HOME/.cache/awesome ] || mkdir -p $HOME/.cache/awesome
 exec awesome --config $HOME/.config/awesome/rc.lua >> $HOME/.cache/awesome/stdout 2>> $HOME/.cache/awesome/stderr
