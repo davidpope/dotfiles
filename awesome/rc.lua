@@ -78,19 +78,20 @@ layouts =
     -- awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
     -- awful.layout.suit.max.fullscreen,
-    -- awful.layout.suit.magnifier
+    -- awful.layout.suit.magnifier,
+    vain.layout.browse,
     awful.layout.suit.floating,
 }
 -- }}}
 
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
--- tags = {}
 tags = {
     names =   {  "1-Code",   "2-Code",   "3-Shells", "4-Browse", "5-Fullscreen", "6-Fullscreen", "7-Other",  "8-Other",  "9-IM" },
-    layouts = {  layouts[1], layouts[1], layouts[1], layouts[1], layouts[4],     layouts[4],     layouts[2], layouts[2], layouts[2] },
-    nmasters = { 3,          3,          3,          2,          1,              1,              1,          1,          1},
-    nminrows = { 1,          1,          2,          1,          1,              1,              1,          1,          1},
+    layouts = {  layouts[1], layouts[1], layouts[1], layouts[5], layouts[4],     layouts[4],     layouts[2], layouts[2], layouts[2] },
+    nmasters = { 3,          3,          3,          1,          1,              1,              1,          1,          1 },
+    nminrows = { 1,          1,          2,          2,          1,              1,              1,          1,          1 },
+    mwfacts =  { nil,        nil,        nil,        0.75,       nil,            nil,            nil,        nil,        nil }
 }
 for s = 1, screen.count() do
     local screen_width = screen[s].workarea.width
@@ -105,6 +106,9 @@ for s = 1, screen.count() do
         end
         awful.tag.setnmaster(nmasters, scr_tags[t])
         awful.tag.setncol(tags.nminrows[t], scr_tags[t])
+        if not tags.mwfacts[t] == nil then
+            awful.tag.setmwfact(tags.mwfacts[t], scr_tags[t])
+        end
     end
     tags[s] = scr_tags
 end
@@ -138,6 +142,7 @@ mysystray = widget({ type = "systray" })
 
 -- Create a wibox for each screen and add it
 mywibox = {}
+mystatusbar = {}
 mypromptbox = {}
 mylayoutbox = {}
 mytaglist = {}
@@ -216,15 +221,18 @@ for s = 1, screen.count() do
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
+
+    -- make space for conky to draw to root
+    -- mooched from http://awesome.naquadah.org/wiki/Conky_bar
+    mystatusbar[s] = awful.wibox({
+        position = "bottom",
+        screen = s,
+        ontop = false,
+        width = 1,
+        height = 16
+    })
 end
 -- }}}
-
--- {{{ Status bar wibox
--- mooched from http://awesome.naquadah.org/wiki/Conky_bar
-mystatusbar = awful.wibox({ position = "bottom", screen = 1, ontop = false, width = 1, height = 16 })
--- }}}
-
-
 
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
