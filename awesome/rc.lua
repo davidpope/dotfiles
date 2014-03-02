@@ -90,8 +90,8 @@ tags = {
     names =   {  "1-Code",   "2-Code",   "3-Shells", "4-Browse", "5-Fullscreen", "6-Fullscreen", "7-Other",  "8-Other",  "9-IM" },
     layouts = {  layouts[1], layouts[1], layouts[1], layouts[5], layouts[4],     layouts[4],     layouts[2], layouts[2], layouts[2] },
     nmasters = { 3,          3,          3,          1,          1,              1,              1,          1,          1 },
-    nminrows = { 1,          1,          2,          2,          1,              1,              1,          1,          1 },
-    mwfacts =  { nil,        nil,        nil,        0.75,       nil,            nil,            nil,        nil,        nil }
+    nmincols = { 1,          1,          2,          2,          1,              1,              1,          1,          1 },
+    absws =    { nil,        nil,        nil,        1200,       nil,            nil,            nil,        nil,        nil }
 }
 for s = 1, screen.count() do
     local screen_width = screen[s].workarea.width
@@ -99,15 +99,20 @@ for s = 1, screen.count() do
     -- tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
     local scr_tags = awful.tag(tags.names, s, tags.layouts)
     for t = 1, #scr_tags do
-        -- this is clumsy but no time for learning LUA right now
+        -- Adjust number of masters/columns for my laptop screen (1920 wide)
+        local nmincols = tags.nmincols[t]
         local nmasters = tags.nmasters[t]
-        if nmasters > 1 and screen_width < 2000 then
-            nmasters = nmasters - 1
+        if screen_width < 2000 then
+            if nmasters > 1 then
+                nmasters = nmasters - 1
+            end
         end
         awful.tag.setnmaster(nmasters, scr_tags[t])
-        awful.tag.setncol(tags.nminrows[t], scr_tags[t])
-        if not tags.mwfacts[t] == nil then
-            awful.tag.setmwfact(tags.mwfacts[t], scr_tags[t])
+        awful.tag.setncol(nmincols, scr_tags[t])
+        -- set browser window to 1200 wide (for development)
+        if not (tags.absws[t] == nil) then
+            local mwfact = tags.absws[t] / screen_width
+            awful.tag.setmwfact(mwfact, scr_tags[t])
         end
     end
     tags[s] = scr_tags
