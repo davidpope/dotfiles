@@ -12,6 +12,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 [ -a $HOME/.gitignore ] || cp $SCRIPT_DIR/gitignore $HOME/.gitignore
 [ -a $HOME/.gitconfig ] || cp $SCRIPT_DIR/gitconfig $HOME/.gitconfig
 [ -a $HOME/.toprc ] || cp $SCRIPT_DIR/toprc $HOME/.toprc
+[ -a $HOME/.my.cnf ] || cp $SCRIPT_DIR/my.cnf $HOME/.my.cnf
 
 # vim setup
 [ -a $HOME/.vimrc ] || ln -s $SCRIPT_DIR/vim/vimrc $HOME/.vimrc
