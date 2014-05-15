@@ -20,8 +20,14 @@ export GNOME_KEYRING_SOCKET
 xsetroot -solid rgb:30/00/38
 xscreensaver -no-splash &
 
+GSD=`which gnome-settings-daemon`
+[ -x "$GSD" ] && "$GSD" &
+
 # need to rejigger network sometimes
 nm-applet &
+
+GVM=`which gnome-volume-manager`
+[ -x "$GVM" ] && "$GVM" &
 
 # Dropbox
 # [ -x $HOME/.dropbox-dist/dropboxd ] && $HOME/.dropbox-dist/dropboxd &
