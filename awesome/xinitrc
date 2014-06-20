@@ -1,8 +1,8 @@
 [[ -a $HOME/.Xresources ]] && xrdb -merge $HOME/.Xresources
 
 # VMWare Tools
-VMWARE_SETUID_TOOLS=/usr/lib/vmware-tools/bin/vmware-user-suid-wrapper
-[[ -u "$VMWARE_SETUID_TOOLS" ]] && "$VMWARE_SETUID_TOOLS"
+VMWARE_USER=/usr/bin/vmware-user
+[[ -u "${VMWARE_USER}" ]] && "${VMWARE_USER}"
 
 # HipChat
 HIPCHAT=$(which hipchat)
