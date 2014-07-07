@@ -8,3 +8,6 @@ vimfiles/bundle/vim-powerline
 
 # https://github.com/kien/ctrlp.vim
 vimfiles/bundle/ctrlp.vim
+
+# https://github.com/rust-lang/rust.git
+vimfiles/bundle/rust
