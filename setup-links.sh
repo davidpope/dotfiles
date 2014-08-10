@@ -32,9 +32,15 @@ if [ "x$1" == "xawesome" ]; then
     # for *dm-managed login
     [ -a $HOME/.xsession ] || ln -s $HOME/.xinitrc $HOME/.xsession
 
-    echo "If a *dm entry for a user-defined session does not exist, run the following:"
+    echo "To run without GNOME 3 services, if a *dm entry for a user-defined session "
+    echo "does not exist, run the following:"
     echo "    sudo cp $SCRIPT_DIR/custom.desktop /usr/share/xsessions"
+    echo ""
+    echo "To run with GNOME 3 services, run the following:"
+    echo "    sudo $SCRIPT_DIR/awesome/gnome3-files/setup-awesome-gnome3.sh"
+    echo ""
     echo "Awesome-WM setup complete."
+
 elif [ "x$1" == "xxmonad" ]; then
     if [ -d $HOME/.xmonad ]; then
         echo "$HOME/.xmonad directory already exists, aborting XMonad setup."
@@ -52,6 +58,7 @@ elif [ "x$1" == "xxmonad" ]; then
 
         echo "XMonad setup complete."
     fi
+
 else
     echo "Skipping window manager setup, use '$0 awesome' or '$0 xmonad' if that is desired."
 fi
