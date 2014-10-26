@@ -59,14 +59,11 @@ show_graph_scale no
 show_graph_range no
 format_human_readable no
 
-# color1 666666
-# color2 888888
 color1 aaaaaa
 color2 ffffff
  
-#${alignr}${color1}eth0 [${color2}${addr eth0}${color1}]: Up:${offset 20}${color2} ${upspeed eth0} ${color1} - Down:${color2} ${downspeed eth0}     \
 TEXT
-${color1}Disk: ${color2}${diskiograph 10,50 000000 ff0000 -t} \
-${alignc}${color1}Net: ${color2}Down: ${downspeedgraph 10,50 000000 ff0000 -t} ${color2}Up: ${upspeedgraph 10,50 000000 ff0000 -t} \
-${alignr}${color1}CPU: ${color2} ${cpu}% ${cpubar cpu0 5,50} \
-${color1}RAM:${color2} ${memperc}% ${membar 5,50}
+${color2}Disk: ${color1}${diskiograph 12,50 000000 ff0000 -t}\
+     ${color2}Net: ${color1}Dn: ${downspeedgraph 12,50 000000 0000ff -t} ${color1}Up: ${upspeedgraph 12,50 000000 0000ff -t}\
+     ${color2}CPU: ${color1} ${cpubar cpu0 5,50}\
+     ${color2}RAM:${color1} ${membar 5,50}
