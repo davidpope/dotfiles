@@ -1,7 +1,6 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=Awesome
-Comment=The awesome launcher
+Name=awesome
 TryExec=awesome
 Exec=awesome

@@ -9,8 +9,6 @@ SESSION_FILE=/usr/share/gnome-session/sessions/awesome.session
 AWESOME_DESKTOP_FILE=/usr/share/applications/awesome.desktop
 AWESOME_GNOME_DESKTOP_FILE=/usr/share/xsessions/awesome-gnome.desktop
 
-[[ "$UID" -ne 0 ]] && echo "Please run as root" && exit
-
 if ! [ -e $SESSION_FILE ]; then
     sudo cp $SCRIPT_DIR/awesome.session $SESSION_FILE
     echo $SESSION_FILE created.
@@ -39,4 +37,4 @@ for F in $(grep -l -e "^OnlyShowIn=.*GNOME.*" /etc/xdg/autostart/*.desktop); do
     OUTFILE=$USER_AUTOSTART_DIR/$(basename $F)
     sed -f ./update-OnlyShowIn.sed < $F > $OUTFILE
     echo $OUTFILE created.
-done;
+done
