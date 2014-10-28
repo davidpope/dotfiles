@@ -1,8 +1,7 @@
 [Desktop Entry]
-Name=Awesome GNOME
-Comment=GNOME with Awesome as window manager
-TryExec=gnome-session
+Name=GNOME Awesome
 Exec=gnome-session --session=awesome
+TryExec=awesome
 Type=Application
-X-LightDM-DesktopName=Awesome GNOME
+X-LightDM-DesktopName=GNOME Awesome
 X-Ubuntu-Gettext-Domain=gnome-session-3.0

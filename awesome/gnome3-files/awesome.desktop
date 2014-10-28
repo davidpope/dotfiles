@@ -1,6 +1,6 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=awesome
+Name=Awesome
 TryExec=awesome
 Exec=awesome
