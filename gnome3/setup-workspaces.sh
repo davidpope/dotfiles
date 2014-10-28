@@ -26,8 +26,11 @@ WORKSPACE_BINDINGS=(
   ['8']='8'
   ['9']='9'
   ['10']='0'
+  # key names can be found at https://git.gnome.org/browse/gtk+/tree/gdk/gdkkeysyms.h
   ['11']='minus'
   ['12']='equal'
+  ['up']='bracketleft'
+  ['down']='bracketright'
 )
 WORKSPACES=${!WORKSPACE_BINDINGS[@]}
 
@@ -38,17 +41,16 @@ for x in $WORKSPACES; do
     gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-$x "[\"<Shift><Super>$KEY\"]"
 done
 
-# key names can be found at https://git.gnome.org/browse/gtk+/tree/gdk/gdkkeysyms.h
 
-gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up "[\"<Super>bracketleft\"]"
-gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down "[\"<Super>bracketright\"]"
-gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "[]"
-gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "[]"
+#gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up "[\"<Super>bracketleft\"]"
+#gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down "[\"<Super>bracketright\"]"
+#gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "[]"
+#gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "[]"
 
-gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up "[\"<Shift><Super>bracketleft\"]"
-gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-down "[\"<Shift><Super>bracketright\"]"
-gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-left "[]"
-gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-right "[]"
+#gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up "[\"<Shift><Super>bracketleft\"]"
+#gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-down "[\"<Shift><Super>bracketright\"]"
+#gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-left "[]"
+#gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-right "[]"
 
 #gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down "[\"<Super>Down\"]"
 #gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up "[\"<Super>Up\"]"
