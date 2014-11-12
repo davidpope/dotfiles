@@ -3,6 +3,26 @@
 # from http://stackoverflow.com/questions/59895/
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+# keep a private tree in $HOME/local for bin, include, share, lib, etc.
+# e.g. use  --prefix=$HOME/local when running configure.sh for downloaded code
+[ -d $HOME/local/bin ] || mkdir -p $HOME/local/bin
+
+# edits
+[ -a $HOME/.profile ] || touch $HOME/.profile
+if ! [[ $(grep 'DAVIDPOPE ENVIRONMENT ADJUSTMENTS' $HOME/.profile) ]]; then
+    cat >> $HOME/.profile <<-EOF
+
+	# DAVIDPOPE ENVIRONMENT ADJUSTMENTS - INSTALLED BY SCRIPT, DO NOT EDIT BY HAND
+	#
+	# These are settings that should apply to graphical shells as well as bash.'
+	# Graphical shells like GNOME 3 do not normally read the .bash_* files.'
+	#
+	EOF
+
+    # environment adjustments here
+    echo 'export PATH="$HOME/local/bin:$PATH"' >> $HOME/.profile
+fi
+
 # links
 [ -a $HOME/.bash_aliases ] || ln -s $SCRIPT_DIR/bash_aliases $HOME/.bash_aliases
 [ -a $HOME/.dircolors ] || ln -s $SCRIPT_DIR/dircolors-solarized $HOME/.dircolors
