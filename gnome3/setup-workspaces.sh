@@ -13,6 +13,9 @@ gsettings set org.gnome.shell.overrides dynamic-workspaces false
 
 echo "Setting 12 fixed workspaces"
 gsettings set org.gnome.desktop.wm.preferences num-workspaces 12
+ 
+echo "Workspaces only on primary display"
+org.gnome.shell.overrides workspaces-only-on-primary true
 
 declare -A WORKSPACE_BINDINGS
 WORKSPACE_BINDINGS=(
