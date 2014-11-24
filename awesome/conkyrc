@@ -63,7 +63,11 @@ color1 aaaaaa
 color2 ffffff
  
 TEXT
-${color2}Disk: ${color1}${diskiograph 12,50 000000 ff0000 -t}\
-     ${color2}Net: ${color1}Dn: ${downspeedgraph 12,50 000000 0000ff -t} ${color1}Up: ${upspeedgraph 12,50 000000 0000ff -t}\
+${color2}DISK: ${color1}${diskiograph 12,50 000000 ff0000 -t}\
+     ${color2}NET: ${color1} Dn: ${downspeedgraph 12,50 000000 0000ff -t} ${color1}Up: ${upspeedgraph 12,50 000000 0000ff -t}\
      ${color2}CPU: ${color1} ${cpubar cpu0 5,50}\
-     ${color2}RAM:${color1} ${membar 5,50}
+     ${color2}RAM: ${color1} ${membar 5,50}\
+     ${color2}BATT:${color1} ${battery_bar 5,50 BAT1}  ${battery_short BAT1}\
+             \
+     ${color2}ATX: ${color1} ${tztime US/Central %a %l:%M %p}\
+     ${color2}SYD: ${color1} ${tztime Australia/Sydney %a %l:%M %p}
