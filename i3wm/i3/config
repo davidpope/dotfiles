@@ -1,0 +1,166 @@
+# i3 config file (v4)
+#
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+set $super Mod4
+set $alt Mod1
+
+# Help (show this file to see keybindings)
+bindsym $super+slash exec gnome-terminal -x vim $HOME/.config/i3/config
+# Help! (show user guide)
+bindsym $super+Shift+slash exec google-chrome --new-window 'file:///usr/share/doc/i3-wm/userguide.html'
+
+# Always put HC on workspace 9
+assign [class="HipChat"] 9
+
+# Run some things
+exec xsetroot -solid rgb:30/00/38
+exec hipchat
+exec bash -c fix_resolution.sh
+# nm-applet likes to coredump on i3wm restart, so check every time and relaunch
+exec_always bash -c 'if ! [ `pgrep nm-applet >/dev/null` ]; then nm-applet & exit; fi'
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+font pango:DejaVu Sans Mono 10
+# Before i3 v4.8, we used to recommend this one as the default:
+# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+# The font above is very space-efficient, that is, it looks good, sharp and
+# clear in small sizes. However, its unicode glyph coverage is limited, the old
+# X core fonts rendering does not support right-to-left and this being a bitmap
+# font, it doesn’t scale on retina/hidpi displays.
+
+# Use Mouse+$super to drag floating windows to their wanted position
+floating_modifier $super
+
+# Super+Enter: start a terminal
+bindsym $super+Return exec i3-sensible-terminal
+
+# Super+i: start a browser
+bindsym $super+i exec x-www-browser
+
+# Super+r: run program via dmenu
+bindsym $super+r exec dmenu_run
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+# bindsym $super+d exec --no-startup-id i3-dmenu-desktop
+
+# kill focused window
+bindsym $super+BackSpace kill
+
+# change focus
+bindsym $super+h focus left
+bindsym $super+j focus down
+bindsym $super+k focus up
+bindsym $super+l focus right
+
+# move focused window
+bindsym $super+Shift+h move left
+bindsym $super+Shift+j move down
+bindsym $super+Shift+k move up
+bindsym $super+Shift+l move right
+
+# split in horizontal orientation (more windows added to right)
+bindsym $super+backslash split h
+
+# split in vertical orientation (more windows added to bottom)
+bindsym $super+minus split v
+
+# enter fullscreen mode for the focused container
+bindsym $super+f fullscreen
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $super+s layout stacking
+bindsym $super+w layout tabbed
+bindsym $super+e layout toggle split
+
+# toggle tiling / floating
+bindsym $super+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $super+space focus mode_toggle
+
+# focus the parent container ("up")
+bindsym $super+u focus parent
+
+# focus the child container
+#bindsym $super+d focus child
+
+# switch to workspace
+bindsym $super+1 workspace 1
+bindsym $super+2 workspace 2
+bindsym $super+3 workspace 3
+bindsym $super+4 workspace 4
+bindsym $super+5 workspace 5
+bindsym $super+6 workspace 6
+bindsym $super+7 workspace 7
+bindsym $super+8 workspace 8
+bindsym $super+9 workspace 9
+bindsym $super+0 workspace 10
+
+# move focused container to workspace and switch to it
+bindsym $super+Shift+1 move container to workspace 1; workspace 1
+bindsym $super+Shift+2 move container to workspace 2; workspace 2
+bindsym $super+Shift+3 move container to workspace 3; workspace 3
+bindsym $super+Shift+4 move container to workspace 4; workspace 4
+bindsym $super+Shift+5 move container to workspace 5; workspace 5
+bindsym $super+Shift+6 move container to workspace 6; workspace 6
+bindsym $super+Shift+7 move container to workspace 7; workspace 7
+bindsym $super+Shift+8 move container to workspace 8; workspace 8
+bindsym $super+Shift+9 move container to workspace 9; workspace 8
+bindsym $super+Shift+0 move container to workspace 10; workspace 10
+
+### Use 'Alt' modifier for screen/output-related functions
+
+# move focused container to next/prev screen
+bindsym $super+$alt+l move container to output right; focus output right
+bindsym $super+$alt+h move container to output left; focus output left
+
+# move focused workspace to next/prev screen; these already include focus
+bindsym $super+$alt+Shift+l move workspace to output right
+bindsym $super+$alt+Shift+h move workspace to output left
+
+# reload the configuration file
+bindsym $super+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $super+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $super+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+    # These bindings trigger as soon as you enter the resize mode
+
+    # Pressing left will shrink the window’s width.
+    # Pressing right will grow the window’s width.
+    # Pressing up will shrink the window’s height.
+    # Pressing down will grow the window’s height.
+    bindsym h resize shrink width 40 px or 5 ppt
+    bindsym j resize grow height 40 px or 5 ppt
+    bindsym k resize shrink height 40 px or 5 ppt
+    bindsym l resize grow width 40 px or 5 ppt
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $super+z mode "resize"
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+    position top
+    tray_output primary
+    status_command i3status -c ~/.config/i3status/config-top
+}
+
+bar {
+    position bottom
+    tray_output none
+    workspace_buttons no
+    binding_mode_indicator no
+    status_command i3status -c ~/.config/i3status/config-bottom
+}

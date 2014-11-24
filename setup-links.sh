@@ -6,6 +6,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # keep a private tree in $HOME/local for bin, include, share, lib, etc.
 # e.g. use  --prefix=$HOME/local when running configure.sh for downloaded code
 [ -d $HOME/local/bin ] || mkdir -p $HOME/local/bin
+[ -x $HOME/local/bin/fix_resolution.sh ] || ln -s $SCRIPT_DIR/scripts/fix_resolution.sh $HOME/local/bin
 
 # edits
 [ -a $HOME/.profile ] || touch $HOME/.profile
@@ -40,7 +41,9 @@ fi
 [ -a $HOME/.vim ] || ln -s $SCRIPT_DIR/vim/vimfiles $HOME/.vim
 
 # window manager setup
-if [ "x$1" == "xgnome3" ]; then
+if [ "x$1" == "xi3" ]; then
+    $SCRIPT_DIR/i3wm/setup.sh
+elif [ "x$1" == "xgnome3" ]; then
     $SCRIPT_DIR/gnome3/setup-workspaces.sh
 elif [ "x$1" == "xawesome" ]; then
     [ -d $HOME/.config ] || mkdir -p $HOME/.config
@@ -80,5 +83,5 @@ elif [ "x$1" == "xxmonad" ]; then
     fi
 
 else
-    echo "Skipping window manager setup, use '$0 gnome3', '$0 awesome', or '$0 xmonad' if that is desired."
+    echo "Skipping window manager setup, use '$0 i3', '$0 gnome3', '$0 awesome', or '$0 xmonad' if that is desired."
 fi
