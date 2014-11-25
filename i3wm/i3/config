@@ -21,18 +21,18 @@ exec_always bash -c 'if ! [ `pgrep nm-applet >/dev/null` ]; then nm-applet & exi
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
 font pango:DejaVu Sans Mono 10
-# Before i3 v4.8, we used to recommend this one as the default:
-# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-# The font above is very space-efficient, that is, it looks good, sharp and
-# clear in small sizes. However, its unicode glyph coverage is limited, the old
-# X core fonts rendering does not support right-to-left and this being a bitmap
-# font, it doesn’t scale on retina/hidpi displays.
 
-# Use Mouse+$super to drag floating windows to their wanted position
-floating_modifier $super
+### Window manager control
+
+# reload the configuration file
+bindsym $super+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $super+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $super+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+### Apps
 
 # Super+Enter: start a terminal
 bindsym $super+Return exec i3-sensible-terminal
@@ -42,13 +42,11 @@ bindsym $super+i exec x-www-browser
 
 # Super+r: run program via dmenu
 bindsym $super+r exec dmenu_run
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-# bindsym $super+d exec --no-startup-id i3-dmenu-desktop
+
+### Window control
 
 # kill focused window
-bindsym $super+BackSpace kill
+bindsym $super+q kill
 
 # change focus
 bindsym $super+h focus left
@@ -78,6 +76,9 @@ bindsym $super+e layout toggle split
 
 # toggle tiling / floating
 bindsym $super+Shift+space floating toggle
+
+# Use Mouse+$super to drag floating windows to their wanted position
+floating_modifier $super
 
 # change focus between tiling / floating windows
 bindsym $super+space focus mode_toggle
@@ -121,13 +122,6 @@ bindsym $super+$alt+h move container to output left; focus output left
 # move focused workspace to next/prev screen; these already include focus
 bindsym $super+$alt+Shift+l move workspace to output right
 bindsym $super+$alt+Shift+h move workspace to output left
-
-# reload the configuration file
-bindsym $super+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $super+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $super+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
