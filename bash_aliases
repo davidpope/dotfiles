@@ -6,6 +6,8 @@ alias l='ls -CFh'
 
 if [ "$COLORTERM" == "gnome-terminal" ]; then
     export TERM=xterm-256color
+elif [ "$COLORTERM" == "xfce4-terminal" ]; then
+    export TERM=xterm-256color
 fi
 
 # use red color for ag highlight
