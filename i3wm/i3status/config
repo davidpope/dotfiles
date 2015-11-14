@@ -15,20 +15,16 @@ general {
 }
 
 order += "tztime date"
-order += "tztime local"
-order += "wireless wlan0"
-order += "ethernet eth0"
-order += "battery 1"
-order += "run_watch VPN"
-order += "tztime ATX"
 order += "tztime SYD"
+order += "tztime UTC"
+order += "tztime local"
 
 tztime date {
-    format = "  %d %b %Y  "
+    format = "       %d %b %Y         "
 }
 
 tztime local {
-    format = "  %a %l:%M %p  "
+    format = "      %a %l:%M %p       "
 }
 
 wireless wlan0 {
@@ -61,7 +57,11 @@ tztime ATX {
 }
 
 tztime SYD {
-    format = "  SYD: %a %l:%M %p"
+    format = "     SYD: %a %l:%M %p     "
     timezone="Australia/Sydney"
 }
 
+tztime UTC {
+    format = "     UTC: %k:%M      "
+    timezone = "US/Central"
+}
