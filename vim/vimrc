@@ -172,7 +172,7 @@ let g:netrw_list_hide = "\.git/$"
 " Python setup
 if has('python')
     " depends on g:netrw_list_hide being set above
-    let g:netrw_list_hide = g:netrw_list_hide . ",\.pyc$$"
+    let g:netrw_list_hide = g:netrw_list_hide . ",\.pyc$"
 
     let g:syntastic_always_populate_loc_list = 1
     let g:syntastic_auto_loc_list = 0
