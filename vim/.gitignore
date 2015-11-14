@@ -1,7 +1,30 @@
 vimfiles/.netrwhist
 
+# https://github.com/scrooloose/syntastic - may require packages
+#
+#    apt-get install python-flake8 pylint
+#  
+vimfiles/bundle/syntastic
+
+# vim-virtualenv
+vimfiles/bundle/vim-virtualenv
+
+# YouCompleteMe - requires setup!
+#
+#    apt-get install python-jedi python3-jedi
+#
+# Then in bundles dir:
+#
+#    git clone https://github.com/Valloric/YouCompleteMe
+#    cd YouCompleteMe
+#    git submodule update --init --recursive
+#    ./install.py
+#
+vimfiles/bundle/YouCompleteMe
+
 # https://github.com/klen/python-mode
-vimfiles/bundle/python-mode
+# No longer used - use syntastic instead
+# vimfiles/bundle/python-mode
 
 # https://github.com/Lokaltog/vim-powerline
 vimfiles/bundle/vim-powerline
