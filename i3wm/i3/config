@@ -1,29 +1,14 @@
-# i3 config file (v4)
-#
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
+# Should you change your keyboard layout somewhen, delete
+# this file and re-run i3-config-wizard(1).
 set $super Mod4
 set $alt Mod1
 
-# Help (show this file to see keybindings)
-bindsym $super+slash exec gnome-terminal -x vim $HOME/.config/i3/config
-# Help! (show user guide)
-bindsym $super+Shift+slash exec google-chrome --new-window 'file:///usr/share/doc/i3-wm/userguide.html'
-
-# Always put HC on workspace 9
-assign [class="HipChat"] 9
-
-# Run some things
-exec xsetroot -solid rgb:30/00/38
-exec hipchat
-exec bash -c fix_resolution.sh
-# nm-applet likes to coredump on i3wm restart, so check every time and relaunch
-exec_always bash -c 'if ! [ `pgrep nm-applet >/dev/null` ]; then nm-applet & exit; fi'
+### Window manager control
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 font pango:DejaVu Sans Mono 10
-
-### Window manager control
 
 # reload the configuration file
 bindsym $super+Shift+c reload
@@ -84,10 +69,10 @@ floating_modifier $super
 bindsym $super+space focus mode_toggle
 
 # focus the parent container ("up")
-bindsym $super+u focus parent
+bindsym $super+Up focus parent
 
 # focus the child container
-#bindsym $super+d focus child
+bindsym $super+Down focus child
 
 # switch to workspace
 bindsym $super+1 workspace 1
@@ -110,7 +95,7 @@ bindsym $super+Shift+5 move container to workspace 5; workspace 5
 bindsym $super+Shift+6 move container to workspace 6; workspace 6
 bindsym $super+Shift+7 move container to workspace 7; workspace 7
 bindsym $super+Shift+8 move container to workspace 8; workspace 8
-bindsym $super+Shift+9 move container to workspace 9; workspace 8
+bindsym $super+Shift+9 move container to workspace 9; workspace 9
 bindsym $super+Shift+0 move container to workspace 10; workspace 10
 
 ### Use 'Alt' modifier for screen/output-related functions
@@ -122,6 +107,8 @@ bindsym $super+$alt+h move container to output left; focus output left
 # move focused workspace to next/prev screen; these already include focus
 bindsym $super+$alt+Shift+l move workspace to output right
 bindsym $super+$alt+Shift+h move workspace to output left
+
+### Resizing
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -146,15 +133,11 @@ bindsym $super+z mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-    position top
-    tray_output primary
-    status_command i3status -c ~/.config/i3status/config-top
+    tray_output none
+    status_command i3status
 }
 
-bar {
-    position bottom
-    tray_output none
-    workspace_buttons no
-    binding_mode_indicator no
-    status_command i3status -c ~/.config/i3status/config-bottom
-}
+### App defaults
+
+# Always put HC on workspace 9
+assign [class="HipChat"] 9

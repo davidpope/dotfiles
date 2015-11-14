@@ -19,29 +19,32 @@ order += "tztime local"
 order += "wireless wlan0"
 order += "ethernet eth0"
 order += "battery 1"
+order += "run_watch VPN"
+order += "tztime ATX"
+order += "tztime SYD"
 
 tztime date {
-    format = "%d %b %Y"
+    format = "  %d %b %Y  "
 }
 
 tztime local {
-    format = "%a %l:%M %p"
+    format = "  %a %l:%M %p  "
 }
 
 wireless wlan0 {
-    format_up = "WIFI: %quality"
-    format_down = "WIFI: down"
+    format_up = "  WIFI: %quality  "
+    format_down = "  WIFI: down  "
 }
 
 ethernet eth0 {
     # if you use %speed, i3status requires root privileges
-    format_up = "E: up  "
-    format_down = "E: down"
+    format_up =   "  E: up  "
+    format_down = " E: down "
     color_bad = "#FFFF00"
 }
 
 battery 1 {
-    format = "%status %percentage"
+    format = "  %status %percentage  "
     integer_battery_capacity = true
     low_threshold = "10"
     threshold_type = "percentage"
@@ -51,3 +54,14 @@ run_watch VPN {
     pidfile = "/var/run/vpnc/pid"
     color_bad = "#FFFF00"
 }
+
+tztime ATX {
+    format = "  ATX: %a %l:%M %p  "
+    timezone = "US/Central"
+}
+
+tztime SYD {
+    format = "  SYD: %a %l:%M %p"
+    timezone="Australia/Sydney"
+}
+
