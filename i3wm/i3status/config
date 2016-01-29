@@ -63,5 +63,5 @@ tztime SYD {
 
 tztime UTC {
     format = "     UTC: %k:%M      "
-    timezone = "US/Central"
+    timezone = "UTC"
 }
