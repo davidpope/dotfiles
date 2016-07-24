@@ -34,3 +34,6 @@ vimfiles/bundle/ctrlp.vim
 
 # https://github.com/rust-lang/rust.git
 vimfiles/bundle/rust
+
+# https://github.com/fatih/vim-go
+vimfiles/bundle/vim-go
