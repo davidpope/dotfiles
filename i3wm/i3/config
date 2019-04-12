@@ -17,6 +17,12 @@ bindsym $super+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $super+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
+# lock the session
+bindsym $super+Shift+Control+l exec xflock4
+
+# file explorer
+bindsym $super+e exec thunar
+
 ### Apps
 
 # Super+Enter: start a terminal
@@ -51,13 +57,13 @@ bindsym $super+backslash split h
 # split in vertical orientation (more windows added to bottom)
 bindsym $super+minus split v
 
-# enter fullscreen mode for the focused container
-bindsym $super+f fullscreen
-
 # change container layout (stacked, tabbed, toggle split)
 bindsym $super+s layout stacking
-bindsym $super+w layout tabbed
-bindsym $super+e layout toggle split
+bindsym $super+t layout tabbed
+bindsym $super+equal layout toggle split
+
+# enter fullscreen mode for the focused container
+bindsym $super+f fullscreen
 
 # toggle tiling / floating
 bindsym $super+Shift+space floating toggle
@@ -75,6 +81,7 @@ bindsym $super+Up focus parent
 bindsym $super+Down focus child
 
 # switch to workspace
+bindsym $super+grave workspace 0
 bindsym $super+1 workspace 1
 bindsym $super+2 workspace 2
 bindsym $super+3 workspace 3
@@ -84,9 +91,9 @@ bindsym $super+6 workspace 6
 bindsym $super+7 workspace 7
 bindsym $super+8 workspace 8
 bindsym $super+9 workspace 9
-bindsym $super+0 workspace 10
 
 # move focused container to workspace and switch to it
+bindsym $super+Shift+grave move container to workspace 0; workspace 0
 bindsym $super+Shift+1 move container to workspace 1; workspace 1
 bindsym $super+Shift+2 move container to workspace 2; workspace 2
 bindsym $super+Shift+3 move container to workspace 3; workspace 3
@@ -96,7 +103,6 @@ bindsym $super+Shift+6 move container to workspace 6; workspace 6
 bindsym $super+Shift+7 move container to workspace 7; workspace 7
 bindsym $super+Shift+8 move container to workspace 8; workspace 8
 bindsym $super+Shift+9 move container to workspace 9; workspace 9
-bindsym $super+Shift+0 move container to workspace 10; workspace 10
 
 ### Use 'Alt' modifier for screen/output-related functions
 
@@ -137,7 +143,19 @@ bar {
     status_command i3status
 }
 
+### Appearance
+
+new_window pixel 3
+client.focused #4c7899 #28577 #ffffff #2e9ef4 #54b4ff
+
 ### App defaults
 
-# Always put HC on workspace 9
-assign [class="HipChat"] 9
+# Always put chat on workspace 0
+assign [class="Slack"] 0
+
+# floating apps
+for_window [class="Thunar"] floating enable
+for_window [class="Gnome-calculator"] floating enable
+for_window [class="Nm-connection-editor"] floating enable
+for_window [class="Xfce4-panel"] floating enable
+for_window [class="Solaar"] floating enable

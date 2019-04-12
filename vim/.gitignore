@@ -26,8 +26,8 @@ vimfiles/bundle/YouCompleteMe
 # No longer used - use syntastic instead
 # vimfiles/bundle/python-mode
 
-# https://github.com/Lokaltog/vim-powerline
-vimfiles/bundle/vim-powerline
+# apt install vim-airline
+vimfiles/bundle/vim-airline-themes
 
 # https://github.com/kien/ctrlp.vim
 vimfiles/bundle/ctrlp.vim

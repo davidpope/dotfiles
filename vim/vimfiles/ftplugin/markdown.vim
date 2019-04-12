@@ -19,7 +19,7 @@ else
 endif
 
 " DaveP modifications
-setlocal equalprg=pandoc\ -t\ markdown\ --columns=78
+setlocal equalprg=pandoc\ -t\ markdown\+fenced_code_attributes\+backtick_code_blocks\ --atx-headers\ --reference-links\ --wrap=auto\ --columns=78
 " end DaveP modifications
 
 " vim:set sw=2:
