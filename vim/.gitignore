@@ -26,7 +26,7 @@ vimfiles/bundle/YouCompleteMe
 # No longer used - use syntastic instead
 # vimfiles/bundle/python-mode
 
-# apt install vim-airline
+# apt install vim-airline vim-airline-themes fonts-powerline && fc-cache -vf
 vimfiles/bundle/vim-airline-themes
 
 # https://github.com/kien/ctrlp.vim
