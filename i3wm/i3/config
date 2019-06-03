@@ -80,6 +80,16 @@ bindsym $super+Up focus parent
 # focus the child container
 bindsym $super+Down focus child
 
+# bind workspaces to outputs
+workspace 0 output primary
+workspace 1 output primary
+workspace 2 output primary
+workspace 3 output primary
+workspace 4 output primary
+workspace 5 output primary
+workspace 6 output primary
+workspace 7 output primary
+
 # switch to workspace
 bindsym $super+grave workspace 0
 bindsym $super+1 workspace 1
@@ -159,3 +169,6 @@ for_window [class="Gnome-calculator"] floating enable
 for_window [class="Nm-connection-editor"] floating enable
 for_window [class="Xfce4-panel"] floating enable
 for_window [class="Solaar"] floating enable
+
+# Saved layouts
+exec --no-startup-id "i3-msg 'workspace 2; append_layout .config/i3/saved-layouts/vscode-web-dev.json'"
