@@ -1,9 +1,0 @@
-! Fix aliased terminal fonts
-! From https://awesome.naquadah.org/wiki/Better_Font_Rendering
-!
-! Render setting for cairo -> pango -> gtk
-Xft.dpi:        96
-Xft.antialias:  true
-Xft.hinting:    true
-Xft.rgba:       rgb
-Xft.hintstyle:  hintslight

@@ -45,24 +45,6 @@ if [ "x$1" == "xi3" ]; then
     $SCRIPT_DIR/i3wm/setup.sh
 elif [ "x$1" == "xgnome3" ]; then
     $SCRIPT_DIR/gnome3/setup-workspaces.sh
-elif [ "x$1" == "xawesome" ]; then
-    [ -d $HOME/.config ] || mkdir -p $HOME/.config
-    [ -a $HOME/.config/awesome ] || ln -s $SCRIPT_DIR/awesome $HOME/.config/awesome
-
-    [ -a $HOME/.xinitrc ] || ln -s $SCRIPT_DIR/awesome/xinitrc $HOME/.xinitrc
-    [ -a $HOME/.xscreensaver ] || ln -s $SCRIPT_DIR/awesome/xscreensaver $HOME/.xscreensaver
-    [ -a $HOME/.Xresources ] || ln -s $SCRIPT_DIR/awesome/Xresources $HOME/.Xresources
-    [ -a $HOME/.conkyrc ] || ln -s $SCRIPT_DIR/awesome/conkyrc $HOME/.conkyrc
-
-    # for *dm-managed login
-    [ -a $HOME/.xsession ] || ln -s $HOME/.xinitrc $HOME/.xsession
-
-    echo "If a *dm entry for a user-defined session does not exist, run the following:"
-    echo ""
-    echo "    sudo cp $SCRIPT_DIR/custom.desktop /usr/share/xsessions"
-    echo ""
-    echo "Awesome-WM setup complete."
-
 elif [ "x$1" == "xxmonad" ]; then
     if [ -d $HOME/.xmonad ]; then
         echo "$HOME/.xmonad directory already exists, aborting XMonad setup."

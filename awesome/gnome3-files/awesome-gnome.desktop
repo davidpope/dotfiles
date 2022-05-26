@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name=GNOME Awesome
-Exec=gnome-session --session=awesome
-TryExec=awesome
-Type=Application
-X-LightDM-DesktopName=GNOME Awesome
-X-Ubuntu-Gettext-Domain=gnome-session-3.0
