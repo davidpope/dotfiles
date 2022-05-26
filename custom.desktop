@@ -1,6 +1,0 @@
-[Desktop Entry]
-Name=User-customized .xsession
-Comment=This session uses your personal .xsession to set up X
-Icon=
-Type=Application
-Exec=/etc/X11/Xsession
