@@ -43,8 +43,6 @@ fi
 # window manager setup
 if [ "x$1" == "xi3" ]; then
     $SCRIPT_DIR/i3wm/setup.sh
-elif [ "x$1" == "xgnome3" ]; then
-    $SCRIPT_DIR/gnome3/setup-workspaces.sh
 else
-    echo "Skipping window manager setup, use '$0 i3' or '$0 gnome3' if that is desired."
+    echo "Skipping window manager setup, use '$0 i3' if that is desired."
 fi
