@@ -4,14 +4,9 @@ alias ll='ls -lFh'
 alias la='ls -AFh'
 alias l='ls -CFh'
 
-if [ "$COLORTERM" == "gnome-terminal" ]; then
-    export TERM=xterm-256color
-elif [ "$COLORTERM" == "xfce4-terminal" ]; then
+if [ "$COLORTERM" == "truecolor" ]; then
     export TERM=xterm-256color
 fi
-
-# use red color for ag highlight
-[ -x `which ag` ] && alias ag='ag --color-match 1\;31'
 
 ### git prompt mooched from http://mediadoneright.com/content/ultimate-git-ps1-bash-prompt
 

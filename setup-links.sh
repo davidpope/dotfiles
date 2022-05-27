@@ -3,11 +3,6 @@
 # from http://stackoverflow.com/questions/59895/
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# keep a private tree in $HOME/local for bin, include, share, lib, etc.
-# e.g. use  --prefix=$HOME/local when running configure.sh for downloaded code
-[ -d $HOME/local/bin ] || mkdir -p $HOME/local/bin
-[ -x $HOME/local/bin/fix_resolution.sh ] || ln -s $SCRIPT_DIR/scripts/fix_resolution.sh $HOME/local/bin
-
 # edits
 [ -a $HOME/.profile ] || touch $HOME/.profile
 if ! [[ $(grep 'DAVIDPOPE ENVIRONMENT ADJUSTMENTS' $HOME/.profile) ]]; then
@@ -18,16 +13,20 @@ if ! [[ $(grep 'DAVIDPOPE ENVIRONMENT ADJUSTMENTS' $HOME/.profile) ]]; then
 	# These are settings that should apply to graphical shells as well as bash.'
 	# Graphical shells like GNOME 3 do not normally read the .bash_* files.'
 	#
+	if [ -f "\$HOME/.profile.local" ]; then
+	    . "\$HOME/.profile.local"
+	fi
 	EOF
 
-    # environment adjustments here
-    echo 'export PATH="$HOME/local/bin:$PATH"' >> $HOME/.profile
 fi
 
 # links
 [ -a $HOME/.bash_aliases ] || ln -s $SCRIPT_DIR/bash_aliases $HOME/.bash_aliases
 [ -a $HOME/.dircolors ] || ln -s $SCRIPT_DIR/dircolors-solarized $HOME/.dircolors
 [ -a $HOME/.inputrc ] || ln -s $SCRIPT_DIR/inputrc $HOME/.inputrc
+
+[ -d $HOME/.config/alacritty ] || mkdir -p $HOME/.config/alacritty
+[ -a $HOME/.config/alacritty/alacritty.yml ] || ln -s $SCRIPT_DIR/alacritty.yml $HOME/.config/alacritty/alacritty.yml
 
 # copies
 [ -a $HOME/.gitignore ] || cp $SCRIPT_DIR/gitignore $HOME/.gitignore
