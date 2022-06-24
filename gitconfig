@@ -12,3 +12,5 @@
     tool = "kdiff3"
 [push]
     default = tracking
+[init]
+    defaultBranch = main
