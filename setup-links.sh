@@ -27,6 +27,8 @@ fi
 
 [ -d $HOME/.config/alacritty ] || mkdir -p $HOME/.config/alacritty
 [ -a $HOME/.config/alacritty/alacritty.yml ] || ln -s $SCRIPT_DIR/alacritty.yml $HOME/.config/alacritty/alacritty.yml
+[ -d $HOME/.config/procps ] || mkdir -p $HOME/.config/procps
+[ -a $HOME/.config/procps/toprc ] || ln -s $SCRIPT_DIR/toprc $HOME/.config/procps/toprc
 
 # copies
 [ -a $HOME/.gitignore ] || cp $SCRIPT_DIR/gitignore $HOME/.gitignore
